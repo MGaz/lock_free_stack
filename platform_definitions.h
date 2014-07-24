@@ -4,7 +4,7 @@
 ///                        SIMPLE LOCK FREE STACK                           ///
 ///                   Copyright (c) 2014 Michael Gazonda                    ///
 ///                            http://mgaz.ca                               ///
-///              https://bitbucket.org/MGaz/lock-free-stack                 ///
+///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
