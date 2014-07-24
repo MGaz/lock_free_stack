@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FFF438F6-132F-42CA-B9C8-64F9B4DFC580</string>
+	<key>IDESourceControlProjectName</key>
+	<string>lock_free_stack</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>53163300-B815-4F29-8BCA-DA54435EC73D</key>
+		<string>https://bitbucket.org/MGaz/lock-free-stack.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>lock_free_stack.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>53163300-B815-4F29-8BCA-DA54435EC73D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/MGaz/lock-free-stack.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>53163300-B815-4F29-8BCA-DA54435EC73D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>53163300-B815-4F29-8BCA-DA54435EC73D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>lock-free-stack</string>
+		</dict>
+	</array>
+</dict>
+</plist>
