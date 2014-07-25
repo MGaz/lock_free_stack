@@ -36,27 +36,27 @@ struct node
 
 	// 64 bit pointer uses 48 bit addressing, and so we're tagging the last 16 bits
 #if PROCESSOR_BITS == 64
-	using stack_tag_t = uint16_t;
+	using stack_id_t = uint16_t;
 
 	inline node() : n_{ nullptr }				{ }
-	inline node(node* n) : n_{ n }					{ }
-	inline void tag(const stack_tag_t t)				{ reinterpret_cast<stack_tag_t*>(this)[3] = t; }
-	inline stack_tag_t read_tag()						{ return reinterpret_cast<stack_tag_t*>(this)[3]; }
-	inline void clear_pointer()							{ tag(0); }
+	inline node(node* n) : n_{ n }				{ }
+	inline void set_id(const stack_id_t t)		{ reinterpret_cast<stack_id_t*>(this)[3] = t; }
+	inline stack_id_t get_id()					{ return reinterpret_cast<stack_id_t*>(this)[3]; }
+	inline void clear_pointer()					{ set_id(0); }
 
 	// 32 bit pointers are "full", so I use another 32bit piece of data for the counter
 	// on 32bit x86, we can swap the entire 64 bits without a lock
 #elif PROCESSOR_BITS == 32
-	using stack_tag_t = uint32_t;
-	stack_tag_t t_;
+	using stack_id_t = uint32_t;
+	stack_id_t t_;
 
-	inline node() : n_{ nullptr }, t_{ 0 }	{ }
-	inline node(node* n) : n_{ n }, t_{ 0 }			{ }
-	inline void tag(const stack_tag_t t)				{ t_ = t; }
-	inline stack_tag_t read_tag()						{ return t_; }
-	inline void clear_pointer()							{ }
+	inline node() : n_{ nullptr }, t_{ 0 }		{ }
+	inline node(node* n) : n_{ n }, t_{ 0 }		{ }
+	inline void set_id(const stack_id_t t)		{ t_ = t; }
+	inline stack_id_t get_id()					{ return t_; }
+	inline void clear_pointer()					{ }
 #else
 	static_assert(false, "unknown pointer size");
 #endif
-	inline void set(node* n, const stack_tag_t t)		{ n_ = n; tag(t); }
+	inline void set(node* n, const stack_id_t t)		{ n_ = n; set_id(t); }
 };

@@ -43,12 +43,13 @@ void stack::push(node* n)
 	//		- compare_exchange will return true if AND ONLY if:
 	//				the new item has been sucessfully placed in the head of the stack
 	//				the new item points to the item that was previously at the head of the stack
-	node next{ n }, head{ head_.load(std::memory_order_relaxed) };
-	do
+	node next{n}, head;
+	n->n_ = nullptr;
+	while (!head_.compare_exchange_weak(head, next))
 	{
 		n->n_ = head.n_;
-		next.tag(head.read_tag() + 1);
-	} while (!head_.compare_exchange_weak(head, next, std::memory_order_relaxed, std::memory_order_relaxed));
+		next.set_id(head.get_id() + 1);
+	}
 }
 bool stack::pop(node*& n)
 {
@@ -64,18 +65,17 @@ bool stack::pop(node*& n)
 	//				the head item has been sucessfully removed from the stack
 	//				the "clean" item holds a pointer to the node that was just in the head_ item
 	//				the head points to the item that was formerly the pointer to n_ in the head
-	n = nullptr;
-	node clean, next, head{ head_.load(std::memory_order_relaxed) };
-	do
+	node clean, next, head;
+	while (!head_.compare_exchange_weak(head, next))
 	{
 		clean.set(head.n_, 0);
-
+		
 		if (!clean.n_)
-			return false;
-
-		next.set(clean.n_->n_, head.read_tag() + 1);
-	} while (!head_.compare_exchange_weak(head, next, std::memory_order_relaxed, std::memory_order_relaxed));
-
+			break;
+		
+		next.set(clean.n_->n_, head.get_id() + 1);
+	}
+	
 	n = clean.n_;
-	return true;
+	return n != nullptr;
 }
