@@ -58,5 +58,5 @@ struct node
 #else
 	static_assert(false, "unknown pointer size");
 #endif
-	inline void set(node* n, const stack_id_t t)		{ n_ = n; set_id(t); }
+	inline void set(node* n, const stack_id_t t)		{ n_ = n; set_id(n == nullptr ? 0 : t); }
 };
