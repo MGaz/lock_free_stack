@@ -33,9 +33,9 @@
 #include "data.h"
 
 // These are some simple things you can change, and see how the performance changes
-#define data_count 40
-#define loop_count 250000
-#define thread_count 4
+#define data_count 200
+#define loop_count 1000000
+#define thread_count 1
 
 
 // This is the test function
@@ -69,7 +69,7 @@ void thread_test(stack *s, std::atomic<uint64_t> *elapsed, std::atomic<size_t> *
 	std::chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds span = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 	
-	*elapsed = span.count();
+	elapsed->store(span.count());
 
 	// If the test is successful, every location will hold a valid pointer, and no pointers
 	// will be duplicated. We test for a valid pointer, and by using delete we ensure that we
@@ -111,7 +111,7 @@ int main(int argc, const char * argv[])
 
 	// Output information
 	size_t operation_count = data_count * loop_count * thread_count * 2;
-	std::cout << "time: " << elapsed << "ms\r\n";
+	std::cout << "time: " << elapsed.load() << "ms\r\n";
 	if (!empty_count)
 		std::cout << "no lost data\r\n";
 	else
@@ -119,7 +119,7 @@ int main(int argc, const char * argv[])
 	std::cout << "thread count: " << thread_count << "\r\n";
 	std::cout << "target processor bits: " << PROCESSOR_BITS << "\r\n";
 	std::cout << "total pushes and pops: " << operation_count << "\r\n";
-	std::cout << "operations per second: " << operation_count / elapsed * 1000 << "\r\n";
+	std::cout << "operations per second: " << operation_count / (elapsed.load() > 0 ? elapsed.load() : 1) * 1000 << "\r\n";
 	std::cout << "press any key to exit\r\n";
 	std::getchar();
     return 0;

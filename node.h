@@ -41,7 +41,6 @@ struct node
 
 	inline node() : n_{ nullptr }                    { }
 	inline node(node* n) : n_{ n }                   { }
-	inline node(node* n, const node& nid):n_{ n }    { if (n_) create_id(nid); }
 	inline void create_id(const node& nid)           { ((stack_id_t*)this)[3] = ((const stack_id_t*)&nid)[3] + 1; }
 	inline node* next_pointer()                      { return (node*)((uint64_t)n_ & 0x0000ffffffffffff); }
 
@@ -51,12 +50,12 @@ struct node
 	using stack_id_t = uint32_t;
 	stack_id_t t_;
 
-	inline node() : n_{ nullptr }, t_{ 0 }               { }
-	inline node(node* n) : n_{ n }, t_{ 0 }              { }
-	inline node(node* n, const node& nid) : n_{ n }      { if (n_) create_id(nid); }
-	inline void create_id(const node& nid)               { t_ = nid.t_ + 1; }
-	inline node* next_pointer()                          { return n_; }
+	inline node() : n_{ nullptr }, t_{ 0 }           { }
+	inline node(node* n) : n_{ n }, t_{ 0 }          { }
+	inline void create_id(const node& nid)           { t_ = nid.t_ + 1; }
+	inline node* next_pointer()                      { return n_; }
 #else
 	static_assert(false, "unknown pointer size");
 #endif
+	inline node(node* n, const node& nid):n_{ n }    { if (n_) create_id(nid); else create_id(*this); }
 };

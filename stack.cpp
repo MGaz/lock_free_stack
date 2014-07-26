@@ -43,7 +43,7 @@ void stack::push(node* n)
 	//		- compare_exchange will return true if AND ONLY if:
 	//				the new item has been sucessfully placed in the head of the stack
 	//				the new item points to the item that was previously at the head of the stack
-	node old_head, new_head{n};
+	node old_head, new_head{ n };
 	n->n_ = nullptr;
 	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
@@ -72,7 +72,7 @@ bool stack::pop(node*& n)
 		n = old_head.next_pointer();
 		if (!n)
 			break;
-		new_head = node {n->n_, old_head};
+		new_head = node{ n->n_, old_head };
 	}
 	return n != nullptr;
 }

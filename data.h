@@ -33,5 +33,6 @@ class data : public node
 	// You can make your own data structure to throw in the stack, but it _must_ derive from node
 
 	// Just an example, serves no purpose other than that - you may remove
-	char data_[56];
+	int x_;
+	char buffer_[200];
 };
