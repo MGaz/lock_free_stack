@@ -33,7 +33,7 @@
 // I solved the ABA problem by tagging the pointers incrementally
 // This effectively ensures that when we swap pointers, we swap the right one
 
-void stack::push(node* n)
+void gaz::stack::push(node* n)
 {
 	node old_head, new_head{ n };
 	n->n_ = nullptr;
@@ -43,7 +43,7 @@ void stack::push(node* n)
 		new_head.create_id(old_head);
 	}
 }
-bool stack::pop(node*& n)
+bool gaz::stack::pop(node*& n)
 {
 	node old_head, new_head;
 	n = nullptr;
