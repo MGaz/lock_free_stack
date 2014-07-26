@@ -34,16 +34,18 @@
 #include "data.h"
 
 // These are some simple things you can change, and see how the performance changes
-#define data_count 200
-#define loop_count 100000
-#define thread_count 4
+#define data_count 20
+#define loop_count 500000
+#define thread_count 2
 
 
 // This is the test function
 // It uses those numbers set at the top
+
 // Using new and delete is part of the test - for our new/delete calls to not crash, 
 // the data inside the stack must be handled properly. When we don't crash, and there is no
-// "lost data", we know that everything went properly when modifying the stack.
+// "lost data", we know that everything went properly when playing with the stack.
+
 void thread_test(stack *s, std::atomic<uint64_t> *elapsed, std::atomic<size_t> *empty_count)
 {
 	// Initialization - create the data we'll test with

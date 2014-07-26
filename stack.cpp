@@ -35,15 +35,6 @@
 
 void stack::push(node* n)
 {
-	// Process for pushing an item without a lock
-	//		- get the head element
-	//		- setup the "next" element - it points to the item being pushed
-	//		- set the new node's next pointer to point to the head's next pointer
-	//		- set the new node's next tag to the current head's tag + 1
-	//		- TRY to swap
-	//		- compare_exchange will return true if AND ONLY if:
-	//				the new item has been sucessfully placed in the head of the stack
-	//				the new item points to the item that was previously at the head of the stack
 	node old_head, new_head{ n };
 	n->n_ = nullptr;
 	while (!head_.compare_exchange_weak(old_head, new_head))
@@ -54,18 +45,6 @@ void stack::push(node* n)
 }
 bool stack::pop(node*& n)
 {
-	// Process for popping an item without a lock
-	//		- get the head element
-	//		- retrieve the head's pointer to the next item - it's stored in clean
-	//		- remove the tag from the retrieved pointer - we need to do this to ensure the pointer is valid
-	//					the pointer would be invalid on x64 without removing the tag
-	//		- set next's pointer to it's next item to the clean item's pointer to next
-	//		- set the new node's next tag to the current head's tag + 1
-	//		- TRY to swap
-	//		- compare_exchange will return true if AND ONLY if:
-	//				the head item has been sucessfully removed from the stack
-	//				the "clean" item holds a pointer to the node that was just in the head_ item
-	//				the head points to the item that was formerly the pointer to n_ in the head
 	node old_head, new_head;
 	n = nullptr;
 	while (!head_.compare_exchange_weak(old_head, new_head))
@@ -73,7 +52,7 @@ bool stack::pop(node*& n)
 		n = old_head.next_pointer();
 		if (!n)
 			break;
-		new_head = node{ n->n_, old_head };
+		new_head.set(n->n_, old_head);
 	}
 	return n != nullptr;
 }

@@ -58,5 +58,5 @@ struct node
 #else
 	static_assert(false, "unknown pointer size");
 #endif
-	inline node(node* n, const node& nid) : n_{ n }  { if (n_) create_id(nid); else create_id(*this); }
+	inline void set(node* n, const node& nid)        { n_ = n; if (n_) create_id(nid); else create_id(*this); }
 };
