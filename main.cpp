@@ -113,15 +113,15 @@ int main(int argc, const char * argv[])
 
 	// Output information
 	size_t operation_count = data_count * loop_count * thread_count * 2;
-	std::cout << "time: " << elapsed.load() << "ms\r\n";
 	if (!empty_count)
 		std::cout << "no lost data\r\n";
 	else
-		std::cout << "lost data count: " << empty_count << " of " << data_count * thread_count << "\r\n";
-	std::cout << "thread count: " << thread_count << "\r\n";
+		std::cout << "___lost data count___: " << empty_count << " of " << data_count * thread_count << "\r\n";
+	std::cout << "thread count         : " << thread_count << "\r\n";
 	std::cout << "target processor bits: " << PROCESSOR_BITS << "\r\n";
 	std::cout << "total pushes and pops: " << operation_count << "\r\n";
 	std::cout << "operations per second: " << operation_count / (elapsed.load() > 0 ? elapsed.load() : 1) * 1000 << "\r\n";
+	std::cout << "processing time      : " << elapsed.load() << "ms\r\n";
 	std::cout << "press any key to exit\r\n";
 	std::getchar();
     return 0;
