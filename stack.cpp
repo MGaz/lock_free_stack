@@ -43,12 +43,12 @@ void stack::push(node* n)
 	//		- compare_exchange will return true if AND ONLY if:
 	//				the new item has been sucessfully placed in the head of the stack
 	//				the new item points to the item that was previously at the head of the stack
-	node next{n}, head;
+	node old_head, new_head{n};
 	n->n_ = nullptr;
-	while (!head_.compare_exchange_weak(head, next))
+	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
-		n->n_ = head.n_;
-		next.set_id(head.get_id() + 1);
+		n->n_ = old_head.n_;
+		new_head.set_id(old_head.get_id() + 1);
 	}
 }
 bool stack::pop(node*& n)
@@ -65,14 +65,14 @@ bool stack::pop(node*& n)
 	//				the head item has been sucessfully removed from the stack
 	//				the "clean" item holds a pointer to the node that was just in the head_ item
 	//				the head points to the item that was formerly the pointer to n_ in the head
-	node next, head;
+	node old_head, new_head;
 	n = nullptr;
-	while (!head_.compare_exchange_weak(head, next))
+	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
-		n = head.pointer();
+		n = old_head.pointer();
 		if (!n)
 			break;
-		next.set(n->n_, head.get_id() + 1);
+		new_head.set(n->n_, old_head.get_id() + 1);
 	}
 	return n != nullptr;
 }
