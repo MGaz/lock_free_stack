@@ -1,11 +1,12 @@
-//   The MIT License (MIT)
-
 ///////////////////////////////////////////////////////////////////////////////
 ///                        SIMPLE LOCK FREE STACK                           ///
 ///                   Copyright (c) 2014 Michael Gazonda                    ///
+///                       MIT Open Source Licensed                          ///
 ///                            http://mgaz.ca                               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////
+
+//   The MIT License (MIT)
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +35,8 @@
 
 // These are some simple things you can change, and see how the performance changes
 #define data_count 200
-#define loop_count 1000000
-#define thread_count 1
+#define loop_count 100000
+#define thread_count 4
 
 
 // This is the test function
@@ -96,6 +97,7 @@ int main(int argc, const char * argv[])
 	std::cout << R"_(///////////////////////////////////////////////////////////////////////////////
 ///                        SIMPLE LOCK FREE STACK                           ///
 ///                   Copyright (c) 2014 Michael Gazonda                    ///
+///                       MIT Open Source Licensed                          ///
 ///                            http://mgaz.ca                               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////)_";
