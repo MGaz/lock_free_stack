@@ -35,7 +35,7 @@
 // These are some simple things you can change, and see how the performance changes
 #define data_count 40
 #define loop_count 250000
-#define thread_count 8
+#define thread_count 4
 
 
 // This is the test function

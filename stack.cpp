@@ -48,7 +48,7 @@ void stack::push(node* n)
 	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
 		n->n_ = old_head.n_;
-		new_head.set_id(old_head.get_id() + 1);
+		new_head.create_id(old_head);
 	}
 }
 bool stack::pop(node*& n)
@@ -69,10 +69,10 @@ bool stack::pop(node*& n)
 	n = nullptr;
 	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
-		n = old_head.pointer();
+		n = old_head.next_pointer();
 		if (!n)
 			break;
-		new_head.set(n->n_, old_head.get_id() + 1);
+		new_head = node {n->n_, old_head};
 	}
 	return n != nullptr;
 }

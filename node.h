@@ -39,11 +39,11 @@ struct node
 #if PROCESSOR_BITS == 64
 	using stack_id_t = uint16_t;
 
-	inline node() : n_{ nullptr }                { }
-	inline node(node* n) : n_{ n }               { }
-	inline void set_id(const stack_id_t t)       { reinterpret_cast<stack_id_t*>(this)[3] = t; }
-	inline stack_id_t get_id()                   { return reinterpret_cast<stack_id_t*>(this)[3]; }
-	inline node* pointer()                       { return (node*)((uint64_t)n_ & 0x0000ffffffffffff); }
+	inline node() : n_{ nullptr }                    { }
+	inline node(node* n) : n_{ n }                   { }
+	inline node(node* n, const node& nid):n_{ n }    { if (n_) create_id(nid); }
+	inline void create_id(const node& nid)           { ((stack_id_t*)this)[3] = ((const stack_id_t*)&nid)[3] + 1; }
+	inline node* next_pointer()                      { return (node*)((uint64_t)n_ & 0x0000ffffffffffff); }
 
 	// 32 bit pointers are "full", so I use another 32bit piece of data for the counter
 	// on 32bit x86, we can swap the entire 64 bits without a lock
@@ -51,13 +51,12 @@ struct node
 	using stack_id_t = uint32_t;
 	stack_id_t t_;
 
-	inline node() : n_{ nullptr }, t_{ 0 }       { }
-	inline node(node* n) : n_{ n }, t_{ 0 }      { }
-	inline void set_id(const stack_id_t t)       { t_ = t; }
-	inline stack_id_t get_id()                   { return t_; }
-	inline node* pointer()                       { return n_; }
+	inline node() : n_{ nullptr }, t_{ 0 }               { }
+	inline node(node* n) : n_{ n }, t_{ 0 }              { }
+	inline node(node* n, const node& nid) : n_{ n }      { if (n_) create_id(nid); }
+	inline void create_id(const node& nid)               { t_ = nid.t_ + 1; }
+	inline node* next_pointer()                          { return n_; }
 #else
 	static_assert(false, "unknown pointer size");
 #endif
-	inline void set(node* n, const stack_id_t t) { n_ = n; set_id(n == nullptr ? 0 : t); }
 };
