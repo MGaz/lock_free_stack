@@ -65,17 +65,14 @@ bool stack::pop(node*& n)
 	//				the head item has been sucessfully removed from the stack
 	//				the "clean" item holds a pointer to the node that was just in the head_ item
 	//				the head points to the item that was formerly the pointer to n_ in the head
-	node clean, next, head;
+	node next, head;
+	n = nullptr;
 	while (!head_.compare_exchange_weak(head, next))
 	{
-		clean.set(head.n_, 0);
-		
-		if (!clean.n_)
+		n = head.pointer();
+		if (!n)
 			break;
-		
-		next.set(clean.n_->n_, head.get_id() + 1);
+		next.set(n->n_, head.get_id() + 1);
 	}
-	
-	n = clean.n_;
 	return n != nullptr;
 }
