@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-///                        SIMPLE LOCK FREE STACK                           ///
-///                   Copyright (c) 2014 Michael Gazonda                    ///
-///                       MIT Open Source Licensed                          ///
-///                            http://mgaz.ca                               ///
+///                         SIMPLE LOCK FREE STACK                          ///
+///           Copyright (c) 2014 Michael Gazonda - http://mgaz.ca           ///
+///                        MIT Open Source Licensed                         ///
+///               http://www.codeproject.com/Articles/801537/               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,22 +27,23 @@
 // SOFTWARE.
 
 #include "stack.h"
+#include <thread>
+#include <iostream>
 // This is it! This is the magic right here.
 // A simple lock-free stack.
-// It doesn't look like much, but getting this one right is difficult.
-// I solved the ABA problem by tagging the pointers incrementally
-// This effectively ensures that when we swap pointers, we swap the right one
 
 void gaz::stack::push(node* n)
 {
 	node old_head, new_head{ n };
 	n->n_ = nullptr;
+	
 	while (!head_.compare_exchange_weak(old_head, new_head))
 	{
 		n->n_ = old_head.n_;
 		new_head.create_id(old_head);
 	}
 }
+ 
 bool gaz::stack::pop(node*& n)
 {
 	node old_head, new_head;

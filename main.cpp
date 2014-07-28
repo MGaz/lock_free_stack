@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-///                        SIMPLE LOCK FREE STACK                           ///
-///                   Copyright (c) 2014 Michael Gazonda                    ///
-///                       MIT Open Source Licensed                          ///
-///                            http://mgaz.ca                               ///
+///                         SIMPLE LOCK FREE STACK                          ///
+///           Copyright (c) 2014 Michael Gazonda - http://mgaz.ca           ///
+///                        MIT Open Source Licensed                         ///
+///               http://www.codeproject.com/Articles/801537/               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -34,10 +34,9 @@
 #include "data.h"
 
 // These are some simple things you can change, and see how the performance changes
-#define data_count 20
-#define loop_count 500000
-#define thread_count 2
-
+#define data_count 100
+#define loop_count 10000
+#define thread_count 8
 
 // This is the test function
 // It uses those numbers set at the top
@@ -46,7 +45,7 @@
 // the data inside the stack must be handled properly. When we don't crash, and there is no
 // "lost data", we know that everything went properly when playing with the stack.
 
-void thread_test(gaz::stack *s, std::atomic<uint64_t> *elapsed, std::atomic<size_t> *empty_count)
+void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<size_t> *empty_count, size_t index)
 {
 	// Initialization - create the data we'll test with
 	gaz::data* d[data_count];	
@@ -65,14 +64,17 @@ void thread_test(gaz::stack *s, std::atomic<uint64_t> *elapsed, std::atomic<size
 			if (d[i])
 				s->push(d[i]);
 		}
+		
 		for (size_t i = 0; i < data_count; ++i)
 			s->pop((gaz::node*&)d[i]);
+
 	}
 
 	std::chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds span = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 	
-	elapsed->store(span.count());
+	std::cout << index << " - thread completed : " << span.count() << "\r\n";
+	*max_elapsed = span.count();
 
 	// If the test is successful, every location will hold a valid pointer, and no pointers
 	// will be duplicated. We test for a valid pointer, and by using delete we ensure that we
@@ -92,22 +94,22 @@ void thread_test(gaz::stack *s, std::atomic<uint64_t> *elapsed, std::atomic<size
 int main(int argc, const char * argv[])
 {
 	std::thread threads[thread_count];
-	std::atomic<uint64_t> elapsed{ 0 };
+	std::atomic<uint64_t> max_elapsed{ 0 };
 	std::atomic<size_t> empty_count{ 0 };
 	gaz::stack s;
 	
 	std::cout << R"_(///////////////////////////////////////////////////////////////////////////////
-///                        SIMPLE LOCK FREE STACK                           ///
-///                   Copyright (c) 2014 Michael Gazonda                    ///
-///                       MIT Open Source Licensed                          ///
-///                            http://mgaz.ca                               ///
+///                         SIMPLE LOCK FREE STACK                          ///
+///           Copyright (c) 2014 Michael Gazonda - http://mgaz.ca           ///
+///                        MIT Open Source Licensed                         ///
+///               http://www.codeproject.com/Articles/801537/               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////)_";
 	std::cout << "\r\nstarting\r\n";
-	
+
 	// Start threads
 	for (size_t i = 0; i < thread_count; ++i)
-		threads[i] = std::thread(thread_test, &s, &elapsed, &empty_count);
+		threads[i] = std::thread(thread_test, &s, &max_elapsed, &empty_count, i);
 
 	// Wait for them to all finish
 	for (size_t i = 0; i < thread_count; ++i)
@@ -122,8 +124,8 @@ int main(int argc, const char * argv[])
 	std::cout << "thread count         : " << thread_count << "\r\n";
 	std::cout << "target processor bits: " << PROCESSOR_BITS << "\r\n";
 	std::cout << "total pushes and pops: " << operation_count << "\r\n";
-	std::cout << "operations per second: " << operation_count / (elapsed.load() > 0 ? elapsed.load() : 1) * 1000 << "\r\n";
-	std::cout << "processing time      : " << elapsed.load() << "ms\r\n";
+	std::cout << "operations per second: " << operation_count / (max_elapsed.load() > 0 ? max_elapsed.load() : 1) * 1000 << "\r\n";
+	std::cout << "processing time      : " << max_elapsed.load() << "ms\r\n";
 	std::cout << "press any key to exit\r\n";
 	std::getchar();
     return 0;

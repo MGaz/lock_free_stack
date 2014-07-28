@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-///                        SIMPLE LOCK FREE STACK                           ///
-///                   Copyright (c) 2014 Michael Gazonda                    ///
-///                       MIT Open Source Licensed                          ///
-///                            http://mgaz.ca                               ///
+///                         SIMPLE LOCK FREE STACK                          ///
+///           Copyright (c) 2014 Michael Gazonda - http://mgaz.ca           ///
+///                        MIT Open Source Licensed                         ///
+///               http://www.codeproject.com/Articles/801537/               ///
 ///                 https://github.com/MGaz/lock_free_stack                 ///
 ///////////////////////////////////////////////////////////////////////////////
 
