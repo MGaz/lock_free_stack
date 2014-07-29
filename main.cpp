@@ -34,9 +34,9 @@
 #include "data.h"
 
 // These are some simple things you can change, and see how the performance changes
-#define data_count 1
-#define loop_count 100000000
-#define thread_count 1
+#define data_count 10
+#define loop_count 1000000
+#define thread_count 4
 
 // This is the test function
 // It uses those numbers set at the top
