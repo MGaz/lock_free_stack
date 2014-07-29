@@ -19,14 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stack.cpp" />
+    <ClInclude Include="..\data.h" />
+    <ClInclude Include="..\node.h" />
+    <ClInclude Include="..\platform_definitions.h" />
+    <ClInclude Include="..\stack.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="data.h" />
-    <ClInclude Include="node.h" />
-    <ClInclude Include="platform_definitions.h" />
-    <ClInclude Include="stack.h" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\stack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDD1A55A-2C71-4A1C-ACA7-9F1F6FE7A42E}</ProjectGuid>

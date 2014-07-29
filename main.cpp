@@ -34,21 +34,21 @@
 #include "data.h"
 
 // These are some simple things you can change, and see how the performance changes
-#define data_count 100
-#define loop_count 10000
-#define thread_count 8
+#define data_count 1
+#define loop_count 100000000
+#define thread_count 1
 
 // This is the test function
 // It uses those numbers set at the top
 
-// Using new and delete is part of the test - for our new/delete calls to not crash, 
+// Using new and delete is part of the test - for our new/delete calls to not crash,
 // the data inside the stack must be handled properly. When we don't crash, and there is no
 // "lost data", we know that everything went properly when playing with the stack.
 
 void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<size_t> *empty_count, size_t index)
 {
 	// Initialization - create the data we'll test with
-	gaz::data* d[data_count];	
+	gaz::data* d[data_count];
 	for (size_t i = 0; i < data_count; ++i)
 		d[i] = new gaz::data;
 
@@ -58,13 +58,13 @@ void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<
 	// Push and pop x number of times and see if everything comes out ok on the other side.
 	// Also a good working sample of moving data into and out of the stack.
 	for (size_t loop = 0; loop < loop_count; ++loop)
-	{				
+	{
 		for (size_t i = 0; i < data_count; ++i)
 		{
 			if (d[i])
 				s->push(d[i]);
 		}
-		
+
 		for (size_t i = 0; i < data_count; ++i)
 			s->pop((gaz::node*&)d[i]);
 
@@ -72,7 +72,7 @@ void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<
 
 	std::chrono::high_resolution_clock::time_point finish = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds span = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-	
+
 	std::cout << index << " - thread completed : " << span.count() << "\r\n";
 	*max_elapsed = span.count();
 
@@ -97,7 +97,7 @@ int main(int argc, const char * argv[])
 	std::atomic<uint64_t> max_elapsed{ 0 };
 	std::atomic<size_t> empty_count{ 0 };
 	gaz::stack s;
-	
+
 	std::cout << R"_(///////////////////////////////////////////////////////////////////////////////
 ///                         SIMPLE LOCK FREE STACK                          ///
 ///           Copyright (c) 2014 Michael Gazonda - http://mgaz.ca           ///

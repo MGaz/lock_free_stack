@@ -36,6 +36,11 @@
 #	else
 #		define PROCESSOR_BITS		32
 #	endif
+#	if _MSC_VER > 1800
+#		define __noexcept				noexcept
+#	else
+#		define __noexcept
+#	endif
 #endif
 
 #if __GNUC__
@@ -44,6 +49,7 @@
 #	else
 #		define PROCESSOR_BITS		32
 #	endif
+#	define __noexcept				noexcept
 #endif
 
 #ifdef __APPLE__
@@ -51,4 +57,6 @@
 #	ifdef __MACH__
 #		define PROCESSOR_BITS		64
 #	endif
+#	define __noexcept				noexcept
 #endif
+

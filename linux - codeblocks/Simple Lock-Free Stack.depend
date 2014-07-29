@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1406665346 source:/media/psf/Home/Dropbox/Programming/lfs/main.cpp
+	<iostream>
+	<thread>
+	<chrono>
+	<atomic>
+	"stack.h"
+	"data.h"
+
+1406554144 /media/psf/Home/Dropbox/Programming/lfs/stack.h
+	<atomic>
+	"node.h"
+
+1406672169 /media/psf/Home/Dropbox/Programming/lfs/node.h
+	"platform_definitions.h"
+
+1406554144 /media/psf/Home/Dropbox/Programming/lfs/platform_definitions.h
+
+1406554144 /media/psf/Home/Dropbox/Programming/lfs/data.h
+	"node.h"
+
+1406665377 source:/media/psf/Home/Dropbox/Programming/lfs/stack.cpp
+	"stack.h"
+	<thread>
+	<iostream>
+
