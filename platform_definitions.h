@@ -30,6 +30,12 @@
 
 // Preprocessor magic to figure out what platform we're on.
 // This is not exhaustive by any means - it's just a quick and dirty place to get started for most projects
+
+// gcc requires the atomic node constructor to be noexcept
+// visual studio 2013 doesn't know what noexcept is
+// hence the __noexcept...
+
+
 #if _WIN32
 #	if _WIN64
 #		define PROCESSOR_BITS		64
@@ -37,7 +43,7 @@
 #		define PROCESSOR_BITS		32
 #	endif
 #	if _MSC_VER > 1800
-#		define __noexcept				noexcept
+#		define __noexcept			noexcept
 #	else
 #		define __noexcept
 #	endif
