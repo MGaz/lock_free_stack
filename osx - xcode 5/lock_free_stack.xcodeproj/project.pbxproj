@@ -28,9 +28,9 @@
 		401C8FC719885FC00052B150 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = "<group>"; };
 		401C8FC819885FC00052B150 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = node.h; path = ../node.h; sourceTree = "<group>"; };
 		401C8FC919885FC00052B150 /* platform_definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform_definitions.h; path = ../platform_definitions.h; sourceTree = "<group>"; };
-		401C8FCA19885FC00052B150 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		401C8FCB19885FC00052B150 /* stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack.cpp; path = ../stack.cpp; sourceTree = "<group>"; };
 		401C8FCC19885FC00052B150 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack.h; path = ../stack.h; sourceTree = "<group>"; };
+		4025122F19898B6E0050673E /* CPOL.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = CPOL.htm; path = ../CPOL.htm; sourceTree = "<group>"; };
 		40DE476E19815B33009F02CB /* lock_free_stack */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lock_free_stack; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -48,11 +48,11 @@
 		40DE476519815B33009F02CB = {
 			isa = PBXGroup;
 			children = (
+				4025122F19898B6E0050673E /* CPOL.htm */,
 				401C8FC619885FC00052B150 /* data.h */,
 				401C8FC719885FC00052B150 /* main.cpp */,
 				401C8FC819885FC00052B150 /* node.h */,
 				401C8FC919885FC00052B150 /* platform_definitions.h */,
-				401C8FCA19885FC00052B150 /* README.md */,
 				401C8FCB19885FC00052B150 /* stack.cpp */,
 				401C8FCC19885FC00052B150 /* stack.h */,
 				40DE476F19815B33009F02CB /* Products */,
