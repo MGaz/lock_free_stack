@@ -13,7 +13,7 @@
 #include "stack.h"
 #include "data.h"
 
-// These are some simple things you can change, and see how the performance changes
+// These are the testing parameters, you can change them
 #define data_count 10
 #define loop_count 1000000
 #define thread_count 4
