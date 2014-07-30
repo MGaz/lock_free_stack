@@ -8,15 +8,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "node.h"
-namespace gaz
+class data : public node
 {
-	class data : public node
-	{
-		// Put your data in here
-		// You can make your own data structure to throw in the stack, but it _must_ derive from node
-		
-		// Just an example, serves no purpose other than that - you may remove
-//		int x_;
-//		char buffer_[10];
-	};	
-}
+	// Put your data in here
+	// You can make your own data structure to throw in the stack, but it _must_ derive from node
+	
+	// Just an example, serves no purpose other than that - you may remove
+	int x_;
+	char buffer_[10];
+};	

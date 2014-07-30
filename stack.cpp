@@ -12,7 +12,7 @@
 // This is it! This is the magic right here.
 // A simple lock-free stack.
 
-void gaz::stack::push(node* n)
+void stack::push(node* n)
 {
 	node old_head, new_head{ n };
 	n->n_ = nullptr;
@@ -24,7 +24,7 @@ void gaz::stack::push(node* n)
 	}
 }
  
-bool gaz::stack::pop(node*& n)
+bool stack::pop(node*& n)
 {
 	node old_head, new_head;
 	n = nullptr;

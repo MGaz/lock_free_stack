@@ -9,14 +9,11 @@
 #pragma once
 #include <atomic>
 #include "node.h"
-namespace gaz
+class stack
 {
-	class stack
-	{
-	public:
-		void push(node* n);
-		bool pop(node*& n);
-	protected:
-		std::atomic<node> head_;
-	};	
-}
+public:
+	void push(node* n);
+	bool pop(node*& n);
+protected:
+	std::atomic<node> head_;
+};	

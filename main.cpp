@@ -25,12 +25,12 @@
 // the data inside the stack must be handled properly. When we don't crash, and there is no
 // "lost data", we know that everything went properly when playing with the stack.
 
-void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<size_t> *empty_count, size_t index)
+void thread_test(stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<size_t> *empty_count, size_t index)
 {
 	// Initialization - create the data we'll test with
-	gaz::data* d[data_count];
+	data* d[data_count];
 	for (size_t i = 0; i < data_count; ++i)
-		d[i] = new gaz::data;
+		d[i] = new data;
 
 	std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
@@ -46,7 +46,7 @@ void thread_test(gaz::stack *s, std::atomic<uint64_t> *max_elapsed, std::atomic<
 		}
 
 		for (size_t i = 0; i < data_count; ++i)
-			s->pop((gaz::node*&)d[i]);
+			s->pop((node*&)d[i]);
 
 	}
 
@@ -76,7 +76,7 @@ int main(int argc, const char * argv[])
 	std::thread threads[thread_count];
 	std::atomic<uint64_t> max_elapsed{ 0 };
 	std::atomic<size_t> empty_count{ 0 };
-	gaz::stack s;
+	stack s;
 
 	std::cout << R"_(///////////////////////////////////////////////////////////////////////////////
 ///                         SIMPLE LOCK FREE STACK                          ///
